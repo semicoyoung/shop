@@ -1,17 +1,17 @@
 var crypto = require('crypto'),
     User = require('../models/user.js'),
-    Post = require('../models/post.js');
+    Commodity = require('../models/commodity.js');
 
 module.exports = function(app) {
  app.get('/', function (req, res) {
-  Post.get(null, function (err, posts) {
+  Commodity.get(null, function (err, commoditys) {
     if (err) {
-      posts = [];
+      commoditys = [];
     } 
     res.render('index', {
       title: '主页',
       user: req.session.user,
-      posts: posts,
+      commoditys: commoditys,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
     });
@@ -94,21 +94,21 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/post', checkLogin);
-  app.get('/post', function (req, res) {
-    res.render('post', {
-      title: '发表',
+  app.get('/addcommodity', checkLogin);
+  app.get('/addcommodity', function (req, res) {
+    res.render('addcommodity', {
+      title: '添加',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
     });
   });
 
-  app.post('/post', checkLogin);
-app.post('/post', function (req, res) {
+  app.post('/addcommodity', checkLogin);
+app.post('/addcommodity', function (req, res) {
   var currentUser = req.session.user,
-      post = new Post(currentUser.name, req.body.title, req.body.post);
-  post.save(function (err) {
+      commodity = new Commodity(currentUser.name, req.body.cname, req.body.cimage,req.body.cprice);
+  commodity.save(function (err) {
     if (err) {
       req.flash('error', err); 
       return res.redirect('/');
