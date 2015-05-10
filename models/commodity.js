@@ -57,7 +57,7 @@ Commodity.prototype.save = function(callback) {
 };
 
 //读取文章及其相关信息
-Commodity.get = function(name, callback) {
+Commodity.getAll = function(name, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -90,3 +90,74 @@ docs.forEach(function (doc) {   //原来是post,应该是name,title,post中的po
     });
   });
 };
+
+
+//获取一篇文章
+Commodity.getOne = function(name, day, cname, callback) {
+  //打开数据库
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    //读取 commoditys 集合
+    db.collection('commoditys', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      //根据用户名、发表日期及文章名进行查询
+      collection.findOne({
+        "name": name,
+        "time.day": day,
+        "cname": cname
+      }, function (err, doc) {
+        mongodb.close();
+        if (err) {
+          return callback(err);
+        }
+        //解析 markdown 为 html
+        doc.cimage = markdown.toHTML(doc.cimage);
+        callback(null, doc);//返回查询的一篇文章
+      });
+    });
+  });
+};
+
+
+//返回通过标题关键字查询的所有文章信息
+Commodity.search = function(keyword, callback) {
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('commoditys', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      var pattern = new RegExp(keyword, "i");
+      collection.find({
+        "cname": pattern
+      }, {
+        "name": 1,
+        "time": 1,
+        "cname": 1
+      }).sort({
+        time: -1
+      }).toArray(function (err, docs) {
+        mongodb.close();
+        if (err) {
+         return callback(err);
+        }
+        callback(null, docs);
+      });
+    });
+  });
+};
+
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+<%- include header %>
+<p class="info">
+  商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a>
+</p>
+<p><%- commodity.cimage %></p>
+<p>价格：<%= commodity.cprice %> 元</p>
+</br>
+<input type="button" name="addtocart" value="加入购物车">
+<%- include footer %>

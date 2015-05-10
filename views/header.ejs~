@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>Blog</title>
+<title>Shop</title>
 <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
 <nav>
 <span><a title="主页" href="/">home</a></span>
 <% if (user) { %>
-  <span><a title="上传" href="/post">post</a></span>
+  <span><a title="添加" href="/addcommodity">addcommodity</a></span>
   <span><a title="登出" href="/logout">logout</a></span>
 <% } else { %>
   <span><a title="登录" href="/login">login</a></span>

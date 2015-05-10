@@ -1,11 +1,10 @@
 <%- include header %>
 <% commoditys.forEach(function (commodity, index) { %>
-  <p><h2><a href="#"><%= commodity.cname %></a></h2></p>
+  <p><h2><a href="u/<%= commodity.name %>/<%= commodity.time.day %>/<%= commodity.cname %>"><%= commodity.cname %></a></h2></p>
   <p class="info">
-    作者：<a href="#"><%= commodity.name %></a> | 
-    日期：<%= commodity.time.minute %>
+    商家：<a href="u/<%= commodity.name %>"><%= commodity.name %></a>
   </p>
   <p><%- commodity.cimage %></p>
-  <p><%- commodity.cprice %></p>
+  <p>价格：<%- commodity.cprice %> 元</p>
 <% }) %>
 <%- include footer %>

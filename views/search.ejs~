@@ -1,0 +1,12 @@
+<%- include header %>
+<ul class="archive">
+<% var lastYear = 0 %>
+<% commoditys.forEach(function (commodity, index) { %>
+  <% if(lastYear != commodity.time.year) { %>
+    <li><h3><%= commodity.time.year %></h3></li>
+  <% lastYear = commodity.time.year } %>
+    <li><time><%= commodity.time.day %></time></li>
+    <li><a href="/u/<%= commodity.name %>/<%= commodity.time.day %>/<%= commodity.cname %>"><%= commodity.cname %></a></li>
+<% }) %>
+</ul>
+<%- include footer %>
