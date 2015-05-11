@@ -11,6 +11,8 @@
 <h1><%= title %></h1>
 </header>
 
+<span><form action="/search" method="GET"><input type="text" name="keyword" placeholder="SEARCH" class="search" /></form></span>
+
 <nav>
 <span><a title="主页" href="/">home</a></span>
 <% if (user) { %>
@@ -20,6 +22,8 @@
   <span><a title="登录" href="/login">login</a></span>
   <span><a title="注册" href="/reg">register</a></span>
 <% } %>
+  <span><a title="购物车" href="/cart">cart</a></span>
+  <span><a title="订单" href="/order">order</a></span>
 </nav>
 
 <article>

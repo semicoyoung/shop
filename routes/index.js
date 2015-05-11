@@ -1,7 +1,7 @@
 var crypto = require('crypto'),
     User = require('../models/user.js'),
-    Commodity = require('../models/commodity.js'),
-    Cart = require('../models/cart.js');
+    Commodity = require('../models/commodity.js');
+
 
 module.exports = function(app) {
  app.get('/', function (req, res) {
@@ -126,6 +126,33 @@ app.post('/addcommodity', function (req, res) {
     res.redirect('/');
   });
 
+	app.get('/cart',checkLogin);
+	app.get('/cart',function(req,res) {
+		res.render('cart', {
+			title: '购物车',
+			user: req.session.user,
+			success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+  });
+});
+
+	app.post('/cart',checkLogin);
+	app.post('cart',function(){
+});
+
+	app.get('/order',checkLogin);
+	app.get('/order',function(req,res) {
+		res.render('order', {
+			title: '订单列表',
+			user: req.session.user,
+			success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+  });
+});
+
+	app.post('/order',checkLogin);
+	app.post('/order',function(res,req){
+});
 
 app.get('/search', function (req, res) {
   Commodity.search(req.query.keyword, function (err, commoditys) {

@@ -3,7 +3,7 @@
   名称：<br />
   <input type="text" name="cname" /><br />
   图片：<br />
-  <textarea name="cima" rows="20" cols="100"></textarea><br />
+  <textarea name="cimage" rows="20" cols="20"></textarea><br />
   价格：<br />
   <input type="text" name="cprice" /><br />
   <input type="submit" value="添加" />
