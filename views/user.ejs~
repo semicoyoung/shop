@@ -2,10 +2,34 @@
 <% commoditys.forEach(function (commodity, index) { %>
   <p><h2><a href="/u/<%= commodity.name %>/<%= commodity.time.day %>/<%= commodity.cname %>"><%= commodity.cname %></a></h2></p>
   <p class="info">
-    作者：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a> | 
+    商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a> | 
     日期：<%= commodity.time.minute %>
   </p>
   <p><%- commodity.cimage %></p>
-  <p><%= commodity.cprice %></p>
+  <p>价格：<%= commodity.cprice %> 元</p>
 <% }) %>
 <%- include footer %>
+
+<%- include header %>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2">
+		</div>
+		<div class="span6">
+			<% commoditys.forEach(function (commodity, index) { %>
+  			<p><h2><a href="/u/<%= commodity.name %>/<%= commodity.time.day %>/<%= commodity.cname %>"><%= commodity.cname %></a></h2></p>
+  			<p class="info">
+  		  	商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a> | 
+    		日期：<%= commodity.time.minute %>
+  			</p>
+  			<p><%- commodity.cimage %></p>
+  			<p>价格：<%= commodity.cprice %> 元</p>
+			<% }) %>
+		</div>
+		<div class="span4">
+		</div>
+	</div>
+</div>
+
+<%- include footer %>
+

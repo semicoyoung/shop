@@ -1,6 +1,7 @@
 var crypto = require('crypto'),
     User = require('../models/user.js'),
-    Commodity = require('../models/commodity.js');
+    Commodity = require('../models/commodity.js'),
+    Cart = require('../models/cart.js')
 
 
 module.exports = function(app) {
@@ -126,8 +127,8 @@ app.post('/addcommodity', function (req, res) {
     res.redirect('/');
   });
 
-	app.get('/cart',checkLogin);
-	app.get('/cart',function(req,res) {
+app.get('/cart',checkLogin);
+app.get('/cart',function(req,res) {
 		res.render('cart', {
 			title: '购物车',
 			user: req.session.user,
@@ -136,12 +137,12 @@ app.post('/addcommodity', function (req, res) {
   });
 });
 
-	app.post('/cart',checkLogin);
-	app.post('cart',function(){
+app.post('/cart',checkLogin);
+app.post('cart',function(){
 });
 
-	app.get('/order',checkLogin);
-	app.get('/order',function(req,res) {
+app.get('/order',checkLogin);
+app.get('/order',function(req,res) {
 		res.render('order', {
 			title: '订单列表',
 			user: req.session.user,
@@ -150,8 +151,8 @@ app.post('/addcommodity', function (req, res) {
   });
 });
 
-	app.post('/order',checkLogin);
-	app.post('/order',function(res,req){
+app.post('/order',checkLogin);
+app.post('/order',function(res,req){
 });
 
 app.get('/search', function (req, res) {

@@ -1,0 +1,37 @@
+<%- include header %>
+
+
+			<form class="form-horizontal" method="post">
+				<div class="control-group">
+					 <label class="control-label" >用户名：</label>
+					<div class="controls">
+						<input name="name" type="text" />
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" >密码：</label>
+					<div class="controls">
+						<input type="password" name="password"/>
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" >确认密码：</label>
+					<div class="controls">
+						<input type="password" name="password-repeat"/>
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" >email：</label>
+					<div class="controls">
+						<input type="email" name="email"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						  <input type="submit" class="btn" value="登陆">
+					</div>
+				</div>
+			</form>
+		
+
+<%- include footer %>

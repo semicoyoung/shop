@@ -4,4 +4,29 @@
 </p>
 <p><%- commodity.cimage %></p>
 <p>价格：<%= commodity.cprice %> 元</p>
+</br>
+
+<p><span><a class="addtocart" href="/addtocart/<%= commodity._id%>">加入购物车</a></span></p>
+
+<%- include footer %>
+
+
+<%- include header %>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span2">
+		</div>
+		<div class="span6">
+			<p class="info">
+  			商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a>
+			</p>
+			<p><%- commodity.cimage %></p>
+			<p>价格：<%= commodity.cprice %> 元</p>
+			</br>
+			<p><span><a class="addtocart" href="/addtocart/<%= commodity._id%>">加入购物车</a></span></p>
+		</div>
+		<div class="span4">
+		</div>
+	</div>
+</div>
 <%- include footer %>
