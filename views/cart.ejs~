@@ -101,6 +101,7 @@
         <div class="col-xs-3 info">
             购物车
         </div>
+	</br>
         <div class="col-xs-9 info">
             <%if(carts.length<2){%>购物车还是空的哟<%}%>
         </div>

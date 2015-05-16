@@ -1,13 +1,13 @@
 var mongodb = require('./db');
 
 function Cart(cart) {
-    this.uname = cart.uname;    //购物车用户id
+    this.uname = cart.uname;    //购物车用户名
     this.cid = cart.cid;       //商品ID
     this.cname =cart.cname;     //商品名称
     this.cprice = cart.cprice;  //商品价格
     this.camount = cart.camount;  //购物车中商品数量
     this.state = cart.state;   //购物车中商品状态
-    this.name = cart.name;     //收货人姓名
+    this.sname = cart.sname;     //商家姓名(sold)
 }
 
 
@@ -34,12 +34,42 @@ Cart.prototype.save = function (callback) {
         cname: this.cname,
         cprice: this.cprice,
         state: this.state,
-        camount: this.camount
+        camount: this.camount,
+		sname: this.sname
     }
     mongodb.open(function (err, db) {
         if (err) {
             callback(err);
         }
+		/*
+		db.colletcion('ids',function(err,collection){
+			collection.findAndModify({"name":"cart",},[],{$inc:{'id':1}},{new:true,upsert:true},function(err,doc){
+			
+			var newcart={
+			cartid: doc.id,
+			uname: cart.uname,
+			cid: cart.cid,
+			cname: cart.cname,
+			cprice: cart.cprice,
+			state: 1,
+			camount: cart.camount,
+			sname: cart.sname,
+			time: time
+		}
+		db.collection('carts',function(err,collection){
+			if(err){
+				mongodb.close();
+				callback(err);				
+			}
+			collection.insert(newcart,{safe:true},function(err,cart){
+				mongodb.close();
+				callback(err,cart);				
+});
+});
+	});
+});
+
+*/
         db.collection('carts', function (err, collection) {
             if (err) {
                 mongodb.close();
@@ -90,6 +120,8 @@ Cart.get = function (uname, state, callback) {
     });
 };
 
+
+/*
 Cart.addtocart = function (uname, cname, callback) {
     mongodb.open(function (err, db) {
         if (err) {
@@ -137,7 +169,9 @@ Cart.addtocart = function (uname, cname, callback) {
     })
 };
 
-Cart.del = function (uname, cname, callback) {
+*/
+
+Cart.del = function (uname, cartid, callback) {
     mongodb.open(function (err, db) {
         if (err) {
             callback(err);
@@ -148,7 +182,7 @@ Cart.del = function (uname, cname, callback) {
                 mongodb.close();
                 callback(err);
             }
-            collection.findAndModify({ "uname": uname, "cname": cname }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
+            collection.findAndModify({ "uname": uname, "._id": cartid }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (cart) {
                     callback(null, cart);
@@ -161,7 +195,7 @@ Cart.del = function (uname, cname, callback) {
 };
 
 
-Cart.change = function(uname,cname,camount,callback){
+Cart.modify = function(uname,cartid,camount,callback){
     mongodb.open(function (err, db) {
         if (err) {
             callback(err);
@@ -171,10 +205,10 @@ Cart.change = function(uname,cname,camount,callback){
                 mongodb.close();
                 callback(err);
             }
-            collection.findAndModify({ "uname": uname, "cname": cname }, [], { $set: { "camount": camount } }, { new: true, upsert: true }, function (err, cart) {
+            collection.findAndModify({ "uname": uname, "._id": cartid }, [], { $inc: { "camount": camount } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (err) {
-                    callback(err);
+                    callback(err,null);
                 }
                 else {
                     callback(null, cart);
@@ -184,7 +218,7 @@ Cart.change = function(uname,cname,camount,callback){
     });
 };
 
-Cart.getNum=function(name,callback){
+Cart.getNum=function(uname,callback){
 	
 	mongodb.open(function(err,db){
 	if(err){callback(err);}
@@ -192,7 +226,7 @@ Cart.getNum=function(name,callback){
 	db.collection('carts',function(err,collection){
 	if(err){mongodb.close();callback(err);}
 
-	collection.find({"uname":name,"state":1}).count(function(err,number){
+	collection.find({"uname":uname,"state":1}).count(function(err,number){
 		console.log("very good");
 		mongodb.close();
 			callback(null,number);
@@ -200,5 +234,30 @@ Cart.getNum=function(name,callback){
 		});
 	});
 };
+
+Cart.buy=function(sname,callback){
+	
+	var sname=this.sname;
+	
+	console.log(cart);
+	mongodb.open(function(err,db){
+	if(err){callback(err);}
+	
+	db.collection('users',function(err,collection){
+	if(err){mongodb.close();callback(err);}
+	
+	collection.findAndModify({"name":sname},[],{$set:{"carts.$.state":state}},{new:true,upsert:true},function(err,user){
+	mongodb.close();
+		if(user){
+		callback(err,user);
+		}else {
+		callback(err,null);
+		}
+			});
+		});
+	});
+};
+
+
 
 

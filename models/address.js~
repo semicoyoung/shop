@@ -45,15 +45,11 @@ Address.prototype.save=function(callback){
 	});
 };
 
-
-
-
 //get address
 
 Address.get=function(name,state,callback){
 	mongodb.open(function(err,db){
 		if(err){callback(err);}
-
 
 		db.collection('adds',function(err,collection){
 			if(err){mongodb.close();callback(err);}
@@ -75,16 +71,9 @@ Address.get=function(name,state,callback){
 					callback(err,null);
 				}
 			});
-
-
-		});
-		
+		});	
 	});
-
 };
-
-
-
 
 //remove address
 
@@ -100,13 +89,8 @@ Address.del=function(name,aid,callback){
 			console.log("afd");
 			mongodb.close();
 			callback(err,1);
-			
-		});
-
-
 		
+		});	
 	});
-
 };
-
 

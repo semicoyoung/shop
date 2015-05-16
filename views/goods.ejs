@@ -3,38 +3,43 @@
 <div class="container-fluid">
 
 	<script>
-        $(function () {
-            $(".add").click(function () {
-                var holder = $(this);
-                var data = {};
-                var data.cname = $("#cname").text();
-                $.ajax({
-                    url:"/cart/addtocart",
-                    type:"POST",
-                    data:JSON.stringify(data),
-                    success:function(data){},
-                    error:function(data){}
-                });
-            });
+        $(function(){
+		$(".add").click(function(){
+				var holder=$(this);
+				var data={};
+				var cartno=parseInt($("#cartno").text());
+				data.cid=parseInt($("#cid").text());
 
-        });
+				$.ajax({
+				type:"POST",
+				data:JSON.stringify(data),
+				contentType: 'application/json',
+				url:"/cart",
+				success:function(data){
+					$("#carttips").text("已添加至购物车");
+					holder.remove();
+					$("#cartno").text(cartno+1);
+				}
+				});
+		});
+	});
     </script>
-
-	<div class="row-fluid">
-		<div class="span2">
-		</div>
-		<div class="span6">
-			<p><span id="cname"><%= commodity.cname %></span></p>
-			<p class="info">
-  			商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a>
-			</p>
-			<p><%- commodity.cimage %></p>
-			<p>价格：<%= commodity.cprice %> 元</p>
-			</br>
-			<p><a class="add btn btn-danger" >加入购物车</a></p>
-		</div>
-		<div class="span4">
-		</div>
-	</div>
+<div class="row-fluid">
+    <div class="col-xs-12">
+        <div class="thumbnail">
+           <span id="cid" class="hidden"><%= commodity.cid %></span>
+           <p><span id="cname"><%= commodity.cname %></span></p>
+            <div class="caption">
+                <h4>
+                    商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a>
+                </h4>
+                <p><%- commodity.cimage %></p>
+                <h6>￥<strong><%= commodity.cprice %> 元</strong></h6>
+                <span id="carttips" class="tips"></span>
+                <a class="add btn btn-danger"><i class="fa fa-shopping-cart"></i>加入购物车</a>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <%- include footer %>

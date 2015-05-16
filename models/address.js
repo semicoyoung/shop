@@ -13,10 +13,10 @@ module.exports=Address;
 
 Address.prototype.save=function(callback){
 	var address={
-		"name":this.name,
-		"ip":this.ip,
-		"who":this.who,
-		"phone":this.phone
+		name: this.name,
+		ip: this.ip,
+		who: this.who,
+		phone: this.phone
 
 	};
 	mongodb.open(function(err,db){

@@ -201,7 +201,7 @@ app.get('/u/:name/:day/:cname', function (req, res) {
 });
 
 app.get('/cart',checkLogin);
-    app.get('/cart', function (req, res) {
+app.get('/cart', function (req, res) {
         var state = 1;
         Cart.get(req.session.user, state, function (err, carts) {
             if (err) {
@@ -239,7 +239,7 @@ app.get('/cart',checkLogin);
         });
     });
 
-
+/*
 app.post('/cart/addtocart',checkLogin);
 app.post('/cart/addtocart',function(req,res){
 	var cname=req.body.cname;
@@ -251,6 +251,53 @@ app.post('/cart/addtocart',function(req,res){
 	});
 });
 
+*/
+
+
+app.post('/cart',checkLogin);
+app.post('/cart',function(req,res){
+		var cid=parseInt(req.body.cid);
+		Commodity.get(cid,function(err,commodity){
+			if(err){
+				return res.redirect('/index');			
+			}
+			var camount=1;
+			var cart=new Cart({
+				"cid":cid,
+				//"cprice":commodity.cprice,
+				"camount":camount,
+				"uname":req.session.user
+				//"sname":commodity.name
+			});
+			cart.save(function(err,carts){
+				if(err){
+					return res.redirect('/index');			
+				}
+				if(carts){
+					res.json({success:2});
+				}
+				res.json({success:1});	
+			});
+		});
+	});
+
+
+
+app.post('/cart/modify',checkLogin);
+app.post('/cart/modify',function(req,res){
+		var ccartid=req.body.cart._id;
+		var camount=parseInt(req.body.camount);
+		Cart.modify(req.session.user,cartid,camount,function(err,cart){
+
+			if(err){
+				return res.json({success:2});
+			}
+			res.json({success:1});
+		});
+	});
+
+
+/*
 app.post('/cart/change',checkLogin);
 app.post('/cart/change',function(req,res){
 	var cname=req.body.cname;
@@ -263,11 +310,11 @@ app.post('/cart/change',function(req,res){
 		res.json({success:2});
 	});
 });
-
+*/
 app.post('/cart/del',checkLogin);
 app.post('/cart/del',function(req,res){
-	var cname=req.body.cname;
-	Cart.del(req.session,user,cname,function(err,cart){
+	var cartid=req.body.cart._id;
+	Cart.del(req.session,user,cartid,function(err,cart){
 	if(cart){
 		return res.json({success:1});	
 	}	

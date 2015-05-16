@@ -3,10 +3,10 @@ var mongodb = require('./db'),
 
 
 function Commodity(name, cname, cimage,cprice) {
-  this.name = name;
-  this.cname = cname;
-  this.cimage = cimage;
-  this.cprice = cprice;
+  this.name = name;   //商家名称
+  this.cname = cname;  //商品名字
+  this.cimage = cimage;  //商品图片
+  this.cprice = cprice;   //商品价格
 }
 
 module.exports = Commodity;
@@ -36,8 +36,32 @@ Commodity.prototype.save = function(callback) {
     if (err) {
       return callback(err);
     }
+
+    db.collection('ids',function(err,collection){
+		collection.findAndModify({"name":"commodity"},[],{$inc:{'id':1}},{new:true,upsert:true},function(err,doc){
+			db.collection('commoditys',function(err,collection){
+				if(err){
+					mongodb.close();
+					return callback(err);
+				}
+				var newcommodity={
+					cid:doc.id,
+					name:commodity.name,
+					cname:commodity.cname,
+					cimage:commodity.cimage,
+					cprice:commodity.cprice,
+					time:time
+				};
+				collection.insert(newcommodity,{safe:true},function(err,commodity){
+					mongodb.close();
+					callback(err);
+				});			
+			});
+		});
+	});
     //读取 commoditys 集合
-    db.collection('commoditys', function (err, collection) {
+    /*
+db.collection('commoditys', function (err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
@@ -53,6 +77,7 @@ Commodity.prototype.save = function(callback) {
         callback(null);//返回 err 为 null
       });
     });
+*/
   });
 };
 
@@ -122,6 +147,29 @@ Commodity.getOne = function(name, day, cname, callback) {
     });
   });
 };
+
+
+Commodity.get = function (cid, callback) {
+
+    mongodb.open(function (err, db) {
+        if (err) { return callback(err); }
+        db.collection('commoditys', function (err, collection) {
+            if (err) { mongodb.close(); return callabck(err); }
+            var query = {};
+            if (cid) {
+                query.cid = parseInt(cid);
+            }
+            query.state = 1;
+            collection.findOne(query, function (err, commodity) {
+
+                mongodb.close();
+                if (err) { callback(err, null); }
+                callback(null, commodity);
+            });
+        });
+    });
+};
+
 
 
 //返回通过标题关键字查询的所有文章信息
