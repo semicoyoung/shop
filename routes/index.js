@@ -1,8 +1,8 @@
 var crypto = require('crypto'),
     User = require('../models/user.js'),
     Commodity = require('../models/commodity.js'),
-    Cart = require('../models/cart.js')
-
+    Cart = require('../models/cart.js'),
+	Address = require('../models/address.js');
 
 module.exports = function(app) {
  app.get('/', function (req, res) {
@@ -106,7 +106,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/addcommodity', checkLogin);
+app.post('/addcommodity', checkLogin);
 app.post('/addcommodity', function (req, res) {
   var currentUser = req.session.user,
       commodity = new Commodity(currentUser.name, req.body.cname, req.body.cimage,req.body.cprice);
@@ -127,19 +127,6 @@ app.post('/addcommodity', function (req, res) {
     res.redirect('/');
   });
 
-app.get('/cart',checkLogin);
-app.get('/cart',function(req,res) {
-		res.render('cart', {
-			title: '购物车',
-			user: req.session.user,
-			success: req.flash('success').toString(),
-      error: req.flash('error').toString()
-  });
-});
-
-app.post('/cart',checkLogin);
-app.post('cart',function(){
-});
 
 app.get('/order',checkLogin);
 app.get('/order',function(req,res) {
@@ -212,6 +199,113 @@ app.get('/u/:name/:day/:cname', function (req, res) {
     });
   });
 });
+
+app.get('/cart',checkLogin);
+    app.get('/cart', function (req, res) {
+        var state = 1;
+        Cart.get(req.session.user, state, function (err, carts) {
+            if (err) {
+                res.redirect('/');
+            }
+			Address.get(req.session.user,state,function(err,adds){
+				if(err){
+					return res.redirect('/index');			
+				}
+				Cart.getNum(req.session.user,function(err,num){
+					if(err){
+						return res.redirect('/index');			
+					}
+					res.render('cart',{
+						title:'我的购物车',
+						user:req.session.user,
+						carts:carts,
+						adds:adds,
+						num:num,
+						success:req.flash('success').toString(),
+						error:req.flash('error').toString()
+					});
+				});
+			});
+
+
+
+          /*  res.render('cart', {
+                title: "购物车",
+                user: req.session.user,
+                carts: carts,
+                seccess: req.flash('success').toString(),
+                error:req.flash('error').toString()
+            });*/
+        });
+    });
+
+
+app.post('/cart/addtocart',checkLogin);
+app.post('/cart/addtocart',function(req,res){
+	var cname=req.body.cname;
+	Cart.addtocart(req.session.user,cname,function(err,cart){
+		if(cart){
+			return res.json({success:1});			
+		}
+		res.json({success:2});
+	});
+});
+
+app.post('/cart/change',checkLogin);
+app.post('/cart/change',function(req,res){
+	var cname=req.body.cname;
+	var camount=req.body.camount;	
+	
+	Cart.change(req.session.user,cname,camount,function(err,cart){
+		if(cart){
+			return res.json({success:1});			
+		}
+		res.json({success:2});
+	});
+});
+
+app.post('/cart/del',checkLogin);
+app.post('/cart/del',function(req,res){
+	var cname=req.body.cname;
+	Cart.del(req.session,user,cname,function(err,cart){
+	if(cart){
+		return res.json({success:1});	
+	}	
+	res.json({success:2});
+	});
+});
+
+
+app.post('/address',checkLogin);
+ 	app.post('/address',function(req,res){
+ 		var ip=req.body.ip;
+ 		var who=req.body.who;
+ 		var phone=req.body.phone;
+ 		var address=new Address({
+ 			"name":req.session.user,
+ 			"ip":ip,
+ 			"who":who,
+ 			"phone":phone
+ 		});
+ 		address.save(function(err,address){
+ 			if(err){
+ 				return res.json({success:2});
+ 			}
+ 			res.json({success:1});
+ 		});
+ 	});
+
+ 	//app.post('/address/del') login
+ 	app.post('/address/del',checkLogin);
+ 	app.post('/address/del',function(req,res){
+ 		var aid=parseInt(req.body.aid);
+ 		Address.del(req.session.user,aid,function(err,adds){
+ 			if(err){
+ 				return  res.json({success:2});
+ 			}	
+ 			res.json({success:1});
+ 		});
+ 	});
 
 
   function checkLogin(req, res, next) {

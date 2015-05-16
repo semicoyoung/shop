@@ -13,7 +13,7 @@
 			<div class="navbar">
 				<div class="navbar-inner">
 					<div class="container-fluid">
-						 <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a> <a href="#" class="brand">网站名</a>
+						 <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a> <a href="#" class="brand">yo</a>
 						<div class="nav-collapse collapse navbar-responsive-collapse">
 							<ul class="nav">
 								<li class="active">
@@ -39,7 +39,7 @@
 								<li class="divider-vertical">
 								</li>
                                 <li>
-                                    <a href="#">购物车</a>
+                                    <a href="/cart">购物车</a>
                                 </li>
                                 <li class="divider-vertical">
                                 </li>

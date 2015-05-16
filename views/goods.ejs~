@@ -1,29 +1,39 @@
 <%- include header %>
-<p class="info">
-  商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a>
-</p>
-<p><%- commodity.cimage %></p>
-<p>价格：<%= commodity.cprice %> 元</p>
-</br>
-
-<p><span><a class="addtocart" href="/addtocart/<%= commodity._id%>">加入购物车</a></span></p>
-
-<%- include footer %>
 
 
-<%- include header %>
+
 <div class="container-fluid">
+
+	<script>
+        $(function () {
+            $(".add").click(function () {
+                var holder = $(this);
+                var data = {};
+                var data.cname = $("#cname").text();
+                $.ajax({
+                    url:"/cart/addtocart",
+                    type:"POST",
+                    data:JSON.stringify(data),
+                    success:function(data){},
+                    error:function(data){}
+                });
+            });
+
+        });
+    </script>
+
 	<div class="row-fluid">
 		<div class="span2">
 		</div>
 		<div class="span6">
+			<p><span id="cname"><%= commodity.cname %></span></p>
 			<p class="info">
   			商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a>
 			</p>
 			<p><%- commodity.cimage %></p>
 			<p>价格：<%= commodity.cprice %> 元</p>
 			</br>
-			<p><span><a class="addtocart" href="/addtocart/<%= commodity._id%>">加入购物车</a></span></p>
+			<p><a class="add btn btn-danger" >加入购物车</a></p>
 		</div>
 		<div class="span4">
 		</div>
