@@ -257,26 +257,35 @@ app.post('/cart/addtocart',function(req,res){
 app.post('/cart',checkLogin);
 app.post('/cart',function(req,res){
 		var cid=parseInt(req.body.cid);
+		var cname=req.body.cname;
+		var ciamge=req.body.cimage;
+		var cprice=req.body.cprice;
+		var name=req.body.name;
+		//var state=1;
 		Commodity.get(cid,function(err,commodity){
 			if(err){
 				return res.redirect('/index');			
 			}
 			var camount=1;
+			var state=1;
 			var cart=new Cart({
 				"cid":cid,
-				//"cprice":commodity.cprice,
+				"cname":cname,
+				"cimage":ciamge,
+				"cprice":cprice,
 				"camount":camount,
-				"uname":req.session.user
-				//"sname":commodity.name
+				"state":state,
+				"uname":req.session.user,
+				"name":name
 			});
 			cart.save(function(err,carts){
 				if(err){
 					return res.redirect('/index');			
 				}
 				if(carts){
-					res.json({success:2});
+					//res.json({success:2});
 				}
-				res.json({success:1});	
+				//res.json({success:1});	
 			});
 		});
 	});
@@ -285,7 +294,7 @@ app.post('/cart',function(req,res){
 
 app.post('/cart/modify',checkLogin);
 app.post('/cart/modify',function(req,res){
-		var ccartid=req.body.cart._id;
+		var cartid=req.body.cart._id;
 		var camount=parseInt(req.body.camount);
 		Cart.modify(req.session.user,cartid,camount,function(err,cart){
 

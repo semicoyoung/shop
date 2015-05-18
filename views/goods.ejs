@@ -9,6 +9,10 @@
 				var data={};
 				var cartno=parseInt($("#cartno").text());
 				data.cid=parseInt($("#cid").text());
+				data.cname=$("#cname").text();
+				data.cimage=$("#cimage").text();
+				data.cprice=$("#cprice").text();
+				data.name=$("#name").text();
 
 				$.ajax({
 				type:"POST",
@@ -31,10 +35,10 @@
            <p><span id="cname"><%= commodity.cname %></span></p>
             <div class="caption">
                 <h4>
-                    商家：<a href="/u/<%= commodity.name %>"><%= commodity.name %></a>
+                    商家：<a  id="name" href="/u/<%= commodity.name %>"><%= commodity.name %></a>
                 </h4>
-                <p><%- commodity.cimage %></p>
-                <h6>￥<strong><%= commodity.cprice %> 元</strong></h6>
+                <p id="cimage"><%- commodity.cimage %></p>
+             	<h6>￥:<span id="cprice"><strong><%= commodity.cprice %> 元</strong></span></h6>
                 <span id="carttips" class="tips"></span>
                 <a class="add btn btn-danger"><i class="fa fa-shopping-cart"></i>加入购物车</a>
             </div>

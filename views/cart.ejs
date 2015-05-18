@@ -101,9 +101,8 @@
         <div class="col-xs-3 info">
             购物车
         </div>
-	</br>
         <div class="col-xs-9 info">
-            <%if(carts.length<2){%>购物车还是空的哟<%}%>
+            <%if(carts.length<1){%>购物车还是空的哟<%}%>
         </div>
     </div>
     <hr>
@@ -111,21 +110,22 @@
         <%if(carts && carts.length>0){
         carts.forEach(function(cart,index){%>
         <div class="cart row">
-            <div class="cid hidden">
-                <%=cart.cid%>
+            <div class="cartid hidden">
+                <%=cart._id%>
             </div>
             <div class="col-xs-5">
-                <img src=><%= cart.pic%> class="img-responsive"/>
+                <img src="<%= cart.cimage%>" class="img-responsive"/>
             </div>
             <div class="col-xs-7">
-                <h5><a href="/p/<%=cart.pid%>" class="pname"><%=cart.name%></a></h5>
+		<h4>商品名称：<%=cart.cname%></h4>
+                <h5>商家：<a href="/p/<%=cart.pid%>" class="pname"><%=cart.name%></a></h5>
                 <strong>¥:</strong>
-                <a class="price inline"><%=cart.price%></a>
+                <a class="price inline"><%=cart.cprice%></a>
                 <hr>
                 <div class="btn-group">
                     <button class="minus btn btn-primary"><i class="fa fa-minus-circle fa-fw"></i></button>
 
-                    <button class="amount btn btn-warning"><%= cart.amount%></button>
+                    <button class="amount btn btn-warning"><%= cart.camount%></button>
 
                     <button class="plus btn btn-info"> <i class="fa fa-plus-circle fa-fw"></i></button>
 
