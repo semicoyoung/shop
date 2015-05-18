@@ -28,7 +28,7 @@
 				var holder=$(this);
 				var data={};
 				var cartno=parseInt($("#cartno").text());
-				data.cid=parseInt($(this).parent().parent().prev().prev().text());
+				data.cartid=$(".cartid").text();
 				$.ajax({
 				type:"POST",
 				data:JSON.stringify(data),
@@ -47,8 +47,8 @@
 			var holder=$(this);
 			var num=parseInt($(this).prev().text());
 			var data={};
-			data.cid=parseInt($(this).parent().parent().prev().prev().text());
-			data.amount=1;
+			data.cartid=$(".cartid").text();
+			data.camount=1;
 			var price=parseFloat($(this).parent().prev().prev().text());
 			$.ajax({
 			type:"POST",
@@ -72,8 +72,8 @@
 				if(num>0)
 				{
 				var data={};
-				data.cid=parseInt($(this).parent().parent().prev().prev().text());
-				data.amount=-1;
+				data.cartid=$("cartid").text();
+				data.camount=-1;
 				var price=parseFloat($(this).parent().prev().prev().text());
 
 				$.ajax({
@@ -114,7 +114,7 @@
                 <%=cart._id%>
             </div>
             <div class="col-xs-5">
-                <img src="<%= cart.pic%>" class="img-responsive"/>
+                <img src="<%- cart.cimage%>" class="img-responsive"/>
             </div>
             <div class="col-xs-7">
 		<h4>商品名称：<%=cart.cname%></h4>
@@ -123,13 +123,13 @@
                 <a class="price inline"><%=cart.cprice%></a>
                 <hr>
                 <div class="btn-group">
-                    <button class="minus btn btn-primary"><i class="fa fa-minus-circle fa-fw"></i></button>
+                    <button class="minus btn btn-primary"  ><i class="fa fa-minus-circle fa-fw">-</i></button>
 
                     <button class="amount btn btn-warning"><%= cart.camount%></button>
 
-                    <button class="plus btn btn-info"> <i class="fa fa-plus-circle fa-fw"></i></button>
+                    <button class="plus btn btn-info"><i class="fa fa-plus-circle fa-fw">+</i></button>
 
-                    <button class="del btn btn-danger"> <i class="fa fa-trash-o fa-fw"></i></button>
+                    <button class="del btn btn-danger"> <i class="fa fa-trash-o fa-fw"></i>del</button>
                 </div>
                 <hr>
                 <strong>小计¥:</strong>

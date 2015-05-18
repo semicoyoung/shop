@@ -267,7 +267,7 @@ app.post('/cart',function(req,res){
 				return res.redirect('/index');			
 			}
 			var camount=1;
-			var state=1;
+			//var state=1;
 			var cart=new Cart({
 				"cid":cid,
 				"cname":cname,
@@ -294,7 +294,7 @@ app.post('/cart',function(req,res){
 
 app.post('/cart/modify',checkLogin);
 app.post('/cart/modify',function(req,res){
-		var ccartid=req.body.cart._id;
+		var cartid=req.body.cartid;
 		var camount=parseInt(req.body.camount);
 		Cart.modify(req.session.user,cartid,camount,function(err,cart){
 
@@ -322,8 +322,8 @@ app.post('/cart/change',function(req,res){
 */
 app.post('/cart/del',checkLogin);
 app.post('/cart/del',function(req,res){
-	var cartid=req.body.cart._id;
-	Cart.del(req.session,user,cartid,function(err,cart){
+	var cartid=req.body.cartid;
+	Cart.del(req.session.user,cartid,function(err,cart){
 	if(cart){
 		return res.json({success:1});	
 	}	

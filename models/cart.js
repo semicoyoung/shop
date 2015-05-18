@@ -35,7 +35,7 @@ Cart.prototype.save = function (callback) {
         cprice: this.cprice,
         state: this.state,
         camount: this.camount,
-		name: this.name
+	name: this.name
     }
     mongodb.open(function (err, db) {
         if (err) {
@@ -182,7 +182,7 @@ Cart.del = function (uname, cartid, callback) {
                 mongodb.close();
                 callback(err);
             }
-            collection.findAndModify({ "uname": uname, "._id": cartid }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
+            collection.findAndModify({ "uname": uname, "_id": cartid }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (cart) {
                     callback(null, cart);
@@ -205,7 +205,7 @@ Cart.modify = function(uname,cartid,camount,callback){
                 mongodb.close();
                 callback(err);
             }
-            collection.findAndModify({ "uname": uname, "._id": cartid }, [], { $inc: { "camount": camount } }, { new: true, upsert: true }, function (err, cart) {
+            collection.findAndModify({ "uname": uname, "_id": cartid }, [], { $inc: { "camount": camount } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (err) {
                     callback(err,null);
