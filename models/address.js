@@ -85,6 +85,8 @@ Address.del=function(name,aid,callback){
 		db.collection('adds',function(err,collection){
 			if(err){mongodb.close();callback(err);}
 			
+			/*collection.remove({"name":name,"aid":aid,"state":1});*/
+
 			collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}});
 			console.log("afd");
 			mongodb.close();

@@ -267,7 +267,7 @@ app.post('/cart',function(req,res){
 				return res.redirect('/index');			
 			}
 			var camount=1;
-			//var state=1;
+			var state=1;
 			var cart=new Cart({
 				"cid":cid,
 				"cname":cname,
@@ -323,11 +323,11 @@ app.post('/cart/change',function(req,res){
 app.post('/cart/del',checkLogin);
 app.post('/cart/del',function(req,res){
 	var cartid=req.body.cartid;
-	Cart.del(req.session.user,cartid,function(err,cart){
-	if(cart){
-		return res.json({success:1});	
+	Cart.del(req.session.user,cartid,function(err){
+	if(err){
+		return res.json({success:2});	
 	}	
-	res.json({success:2});
+	res.json({success:1});
 	});
 });
 

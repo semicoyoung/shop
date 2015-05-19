@@ -105,7 +105,7 @@
             <%if(carts.length<1){%>购物车还是空的哟<%}%>
         </div>
     </div>
-    <hr>
+  
     <div id="cartitems">
         <%if(carts && carts.length>0){
         carts.forEach(function(cart,index){%>
@@ -249,7 +249,7 @@ $("#order").click(function(){
                 <td class="center"><%= add.phone%></td>
                 <td class="center">
                     <button class="delete btn btn-danger">
-                        <i class="fa fa-trash-o"></i>
+                        <i class="fa fa-trash-o">del</i>
                     </button>
                 </td>
             </tr>

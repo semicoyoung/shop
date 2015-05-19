@@ -13,10 +13,10 @@ module.exports=Address;
 
 Address.prototype.save=function(callback){
 	var address={
-		"name":this.name,
-		"ip":this.ip,
-		"who":this.who,
-		"phone":this.phone
+		name: this.name,
+		ip: this.ip,
+		who: this.who,
+		phone: this.phone
 
 	};
 	mongodb.open(function(err,db){
@@ -85,7 +85,9 @@ Address.del=function(name,aid,callback){
 		db.collection('adds',function(err,collection){
 			if(err){mongodb.close();callback(err);}
 			
-			collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}});
+			collection.remove({"name":name,"aid":aid,"state":1});
+
+			//collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}});
 			console.log("afd");
 			mongodb.close();
 			callback(err,1);

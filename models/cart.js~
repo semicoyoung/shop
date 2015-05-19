@@ -182,6 +182,15 @@ Cart.del = function (uname, cartid, callback) {
                 mongodb.close();
                 callback(err);
             }
+			collection.remove({"uname":uname,"_id":cartid},{w:1},function(err){
+			mongodb.close();
+			if(err){ 
+				callback(err,null);
+			}
+			
+})
+
+/*
             collection.findAndModify({ "uname": uname, "_id": cartid }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (cart) {
@@ -189,7 +198,7 @@ Cart.del = function (uname, cartid, callback) {
                 } else {
                     callback(err, null);
                 }
-            });
+            });*/
         });
     });
 };
@@ -205,7 +214,7 @@ Cart.modify = function(uname,cartid,camount,callback){
                 mongodb.close();
                 callback(err);
             }
-            collection.findAndModify({ "uname": uname, "._id": cartid }, [], { $inc: { "camount": camount } }, { new: true, upsert: true }, function (err, cart) {
+            collection.findAndModify({ "uname": uname, "_id": cartid }, [], { $inc: { "camount": camount } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (err) {
                     callback(err,null);
@@ -234,6 +243,7 @@ Cart.getNum=function(uname,callback){
 		});
 	});
 };
+
 
 Cart.buy=function(name,callback){
 	
