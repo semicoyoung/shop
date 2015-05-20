@@ -87,11 +87,18 @@ Address.del=function(name,aid,callback){
 			
 			/*collection.remove({"name":name,"aid":aid,"state":1});*/
 
-			collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}});
+			/*collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}});
 			console.log("afd");
 			mongodb.close();
 			callback(err,1);
 		
+			*/
+			collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}},function(err){mongodb.close();
+if(err){return callback(err);}
+callback(null,1);
+});
+
+
 		});	
 	});
 };
