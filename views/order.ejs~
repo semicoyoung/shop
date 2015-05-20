@@ -23,9 +23,9 @@
                     <td><h6>下单时间：<%= order.time.minute %></h6></td>
                 </tr>
                 <tr>
-                    <td><h6>收货地址：<%= order.ip %></h6></td>
-                    <td><h6>收货人：<%= order.who %></h6></td>
-                    <td><h6>联系方式：<%=order.phone%></h6></td>
+                    <tr><h6>收货地址：<%= order.ip %></h6></tr>
+                    <tr><h6>收货人：<%= order.who %></h6></tr>
+                    <tr><h6>联系方式：<%=order.phone%></h6></tr>
                 </tr>
             </table>
             <hr />

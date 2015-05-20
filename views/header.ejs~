@@ -50,4 +50,13 @@
 			</div>
 		</div>
 	</div>
+
+<div class="span2">
+            <span><form action="/search" method="GET"><input type="text" name="keyword" placeholder="搜索"></form></span>
+        </div>
+
 </div>
+
+
+
+

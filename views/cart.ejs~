@@ -96,16 +96,16 @@
 		});
 </script>
 <div class="container">
-    <hr>
+   
     <div class="row">
         <div class="col-xs-3 info">
-            购物车
+            您的购物车
         </div>
         <div class="col-xs-9 info">
             <%if(carts.length<1){%>购物车还是空的哟<%}%>
         </div>
     </div>
-  
+    <hr>
     <div id="cartitems">
         <%if(carts && carts.length>0){
         carts.forEach(function(cart,index){%>
