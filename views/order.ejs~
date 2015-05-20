@@ -1,0 +1,36 @@
+<%- include  header %>
+<div class="container" >
+
+    <div class="row">
+        <%if ( orders.length<1){ %>
+        订单为空！
+        <% } %>
+    </div>
+
+    <div class="container">
+
+        <% if (orders && orders.length >0 ){ 
+        orders.forEach( function(order,index ){  %>
+        <div class="hidden"><%= order._id %></div>
+        <div class="info row">
+            <div class="col-xs-8"><strong>下单时间:<%=order.time.minute %></strong></div>
+			<br />
+            <div><h4>商品名称：<%= order.cname%></h4></div>
+            <div><img src="<%= order.cimage%>"/></div>
+            <div><h4>单价￥：<%= order.cprice %></h4></div>
+            <div><h4>数量：<%= order.camount %></h4></div>
+            <div class="col-sx-4"><strong>本单总价￥：</strong><%= order.cprice*order.camount %></div>
+            <br />
+            <h4>收货地址：<%= order.ip %></h4>
+            <br />
+            <h4>收件人：<%= order.who %></h4>
+            <br />
+            <h4>联系方式：<%= order.phone %></h4>
+            <br />
+			<hr />
+        </div>
+        <%})}%>
+    </div>
+</div>
+
+<%- include footer %>

@@ -182,15 +182,6 @@ Cart.del = function (uname, cartid, callback) {
                 mongodb.close();
                 callback(err);
             }
-			collection.remove({"uname":uname,"_id":cartid},{w:1},function(err){
-			mongodb.close();
-			if(err){ 
-				callback(err,null);
-			}
-			
-})
-
-/*
             collection.findAndModify({ "uname": uname, "_id": cartid }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (cart) {
@@ -198,7 +189,7 @@ Cart.del = function (uname, cartid, callback) {
                 } else {
                     callback(err, null);
                 }
-            });*/
+            });
         });
     });
 };

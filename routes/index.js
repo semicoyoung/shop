@@ -2,7 +2,8 @@ var crypto = require('crypto'),
     User = require('../models/user.js'),
     Commodity = require('../models/commodity.js'),
     Cart = require('../models/cart.js'),
-	Address = require('../models/address.js');
+	Address = require('../models/address.js'),
+	Order=require('../models/order.js');
 
 module.exports = function(app) {
  app.get('/', function (req, res) {
@@ -126,21 +127,6 @@ app.post('/addcommodity', function (req, res) {
     req.flash('success', '登出成功!');
     res.redirect('/');
   });
-
-
-app.get('/order',checkLogin);
-app.get('/order',function(req,res) {
-		res.render('order', {
-			title: '订单列表',
-			user: req.session.user,
-			success: req.flash('success').toString(),
-      error: req.flash('error').toString()
-  });
-});
-
-app.post('/order',checkLogin);
-app.post('/order',function(res,req){
-});
 
 app.get('/search', function (req, res) {
   Commodity.search(req.query.keyword, function (err, commoditys) {
@@ -362,6 +348,52 @@ app.post('/address',checkLogin);
  			res.json({success:1});
  		});
  	});
+
+
+app.get('/order', checkLogin);
+app.get('/order', function (req, res) {
+
+    Order.get(req.session.user, function (err, orders) {
+        if (err) {
+            res.redirect('/');
+        }
+        res.render('order', {
+            title: '订单',
+            user: req.session.user,
+            orders: orders,
+            success: req.flash('success').toString(),
+            error:req.flash('error').toString()
+        });
+    });
+});
+	
+
+	app.post('/order',checkLogin);
+	app.post('/order',function(req,res){
+ 		var ip=req.body.ip;
+ 		var who=req.body.who;
+ 		var phone=req.body.phone;
+ 		var state=1;
+ 		Cart.get(req.session.user,state,function(err,carts){
+ 			if(err){
+ 				return res.redirect('/index');			
+ 			}
+ 			Order.save(carts,ip,who,phone,function(err,doc){
+ 				if(err){
+ 					return res.redirect('/index');			
+ 				}
+				res.json({success:1});
+ 			});
+ 		});
+ 	});
+
+
+
+
+
+
+
+
 
 
   function checkLogin(req, res, next) {
