@@ -33,9 +33,9 @@ Cart.prototype.save = function (callback) {
         cid: this.cid,
         cname: this.cname,
         cprice: this.cprice,
-        state: this.state,
+        state: 1,
         camount: this.camount,
-	name: this.name
+		name: this.name
     }
     mongodb.open(function (err, db) {
         if (err) {
@@ -182,14 +182,34 @@ Cart.del = function (uname, cartid, callback) {
                 mongodb.close();
                 callback(err);
             }
-            collection.findAndModify({ "uname": uname, "_id": cartid }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
+
+
+			collection.remove({"uname":uname,"_id":cartid},		{w:1},function(err){
+				mongodb.close();
+				if(err){
+					return callback(err);
+				}
+				callback(null);
+			});
+			
+/*
+			collection.update({"uname":uname,"_id":cartid},{$set:{"state":0}},function(err){
+				mongodb.close();
+				if(err){	
+					return callback(err,null); 
+				 }
+				callback(null,collection);
+});
+*/
+
+            /*collection.findAndModify({ "uname": uname, "_id": cartid }, [],{ $set: { "state": 0 } }, { new: true, upsert: true }, function (err, cart) {
                 mongodb.close();
                 if (cart) {
                     callback(null, cart);
                 } else {
                     callback(err, null);
                 }
-            });
+            });*/
         });
     });
 };

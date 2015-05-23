@@ -253,14 +253,14 @@ app.post('/cart',function(req,res){
 				return res.redirect('/index');			
 			}
 			var camount=1;
-			var state=1;
+			//var state=1;
 			var cart=new Cart({
 				"cid":cid,
 				"cname":cname,
 				"cimage":ciamge,
 				"cprice":cprice,
 				"camount":camount,
-				"state":state,
+				//"state":state,
 				"uname":req.session.user,
 				"name":name
 			});
@@ -386,14 +386,6 @@ app.get('/order', function (req, res) {
  			});
  		});
  	});
-
-
-
-
-
-
-
-
 
 
   function checkLogin(req, res, next) {

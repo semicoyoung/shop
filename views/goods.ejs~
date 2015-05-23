@@ -29,21 +29,27 @@
 	});
     </script>
 <div class="row-fluid">
-    <div class="col-xs-12">
-        <div class="thumbnail">
-           <span id="cid" class="hidden"><%= commodity.cid %></span>
-           <p><span id="cname"><%= commodity.cname %></span></p>
-            <div class="caption">
-                <h4>
-                    商家：<a  id="name" href="/u/<%= commodity.name %>"><%= commodity.name %></a>
-                </h4>
-                <p id="cimage"><%- commodity.cimage %></p>
-             	<h6>￥:<span id="cprice"><strong><%= commodity.cprice %> 元</strong></span></h6>
-                <span id="carttips" class="tips"></span>
-                <a class="add btn btn-danger"><i class="fa fa-shopping-cart"></i>加入购物车</a>
+ <div class="span2">
+        </div>
+        <div class="span6">
+            <div class="col-xs-12">
+                <div class="thumbnail">
+                    <span id="cid" class="hidden"><%= commodity.cid %></span>
+                    <p><span id="cname"><h4><%= commodity.cname %></h4></span></p>
+                    <div class="caption">
+                        <h4>
+                            商家：<a id="name" href="/u/<%= commodity.name %>"><%= commodity.name %></a>
+                        </h4>
+                        <p id="cimage"><%- commodity.cimage %></p>
+                        <h6>￥:<span id="cprice"><strong><%= commodity.cprice %> 元</strong></span></h6>
+                        <span id="carttips" class="tips"></span>
+                        <a class="add btn btn-danger"><i class="fa fa-shopping-cart"></i>加入购物车</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="span4">
+        </div>
 </div>
 </div>
 <%- include footer %>
