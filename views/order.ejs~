@@ -16,10 +16,9 @@
             <table class="table" border="1">
                 <tr>
                     <td><h6>商品名称：<%= order.cname %></h6></td>
-                    <td><img src="<%= order.cimage %>" /></td>
                     <td><h6>单价￥：<%= order.cprice%></h6></td>
                     <td><h6>数量：<%= order.camount%></h6></td>
-                    <td><h6>本单总价：￥<%= order.cprice*order.camount %></h6></td>
+                    <td><h6>本单总价：￥<%= order.cprice %></h6></td>
                     <td><h6>下单时间：<%= order.time.minute %></h6></td>
                 </tr>
                 <tr>
