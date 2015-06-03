@@ -28,7 +28,7 @@
 				var holder=$(this);
 				var data={};
 				var cartno=parseInt($("#cartno").text());
-				data.cartid=$(".cartid").text();
+				data.cartid=parseInt($(this).parent().parent().prev().prev().text());
 				$.ajax({
 				type:"POST",
 				data:JSON.stringify(data),
@@ -47,7 +47,7 @@
 			var holder=$(this);
 			var num=parseInt($(this).prev().text());
 			var data={};
-			data.cartid=$(".cartid").text();
+			data.cartid=parseInt($(this).parent().parent().prev().prev().text());
 			data.camount=1;
 			var price=parseFloat($(this).parent().prev().prev().text());
 			$.ajax({
@@ -72,7 +72,7 @@
 				if(num>0)
 				{
 				var data={};
-				data.cartid=$("cartid").text();
+				data.cartid=parseInt($(this).parent().parent().prev().prev().text());
 				data.camount=-1;
 				var price=parseFloat($(this).parent().prev().prev().text());
 
@@ -96,7 +96,7 @@
 		});
 </script>
 <div class="container">
-   
+   		
     <div class="row">
         <div class="col-xs-3 info">
             您的购物车
@@ -111,14 +111,14 @@
         carts.forEach(function(cart,index){%>
         <div class="cart row">
             <div class="cartid hidden">
-                <%=cart._id%>
+                <%=cart.cartid%>
             </div>
             <div class="col-xs-5">
                 <img src="<%- cart.cimage%>" class="img-responsive"/>
             </div>
             <div class="col-xs-7">
-		<h4>商品名称：<%= cart.cname%></h4>
-                <h5>商家：<a href="/p/<%=cart.pid%>" class="pname"><%=cart.name%></a></h5>
+	<h4>商品名称：<%= cart.cname%></h4>
+	<h4> 商家：<a  href="/u/<%= cart.name %>"><%= cart.name %></a></h4>
                 <strong>¥:</strong>
                 <a class="price inline"><%=cart.cprice%></a>
                 <hr>
@@ -135,9 +135,10 @@
                 <strong>小计¥:</strong>
                 <span class="eachtotal badge inline"></span>
             </div>
-
+            <hr>
         </div>
-        <hr>
+        </br>
+        
 
         <%})}%>
     </div>
