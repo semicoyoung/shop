@@ -35,7 +35,7 @@
             <div class="col-xs-12">
                 <div class="thumbnail">
                     <span id="cid" class="hidden"><%= commodity.cid %></span>
-                    <p><span id="cname"><h4><%= commodity.cname %></h4></span></p>
+                    <h4>商品名称：<span id="cname"><%= commodity.cname %></span></h4>
                     <div class="caption">
                         <h4>
                             商家：<a id="name" href="/u/<%= commodity.name %>"><%= commodity.name %></a>

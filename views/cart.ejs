@@ -101,8 +101,9 @@
         <div class="col-xs-3 info">
             您的购物车
         </div>
+	</br>
         <div class="col-xs-9 info">
-            <%if(carts.length<1){%>购物车还是空的哟<%}%>
+            <%if(carts.length<1){%>购物车还是空的！<%}%>
         </div>
     </div>
     <hr>
@@ -217,15 +218,15 @@ $("#order").click(function(){
 				success:function(data){
 					$("#cartitems").remove();
 					$("#total").remove();
-					$("#ordertips").text("订单已经生成了哟");
+					$("#ordertips").text("订单已经生成(*_*)");
 					$("#cartno").text(0);
 				}
 				});
 		}
-		else {$("#ordertips").text("收货地址还是空的哟");
+		else {$("#ordertips").text("收货地址还是空的！");
 			return false;}
 		}
-		else {$("#ordertips").text("购物车还是空的哟");
+		else {$("#ordertips").text("购物车还是空的！");
 		return false;}
 		});
 });
