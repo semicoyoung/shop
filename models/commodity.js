@@ -11,7 +11,7 @@ function Commodity(name, cname, cimage,cprice) {
 
 module.exports = Commodity;
 
-//存储一篇文章及其相关信息
+//保存新添加的商品
 Commodity.prototype.save = function(callback) {
   var date = new Date();
   //存储各种时间格式，方便以后扩展
@@ -23,7 +23,7 @@ Commodity.prototype.save = function(callback) {
       minute : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
       date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) 
   }
-  //要存入数据库的文档
+  //要存入数据库的商品
   var commodity = {
       name: this.name,
       time: time,

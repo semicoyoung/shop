@@ -3,10 +3,10 @@ var mongodb = require('./db'),
 
 
 function Commodity(name, cname, cimage,cprice) {
-  this.name = name;
-  this.cname = cname;
-  this.cimage = cimage;
-  this.cprice = cprice;
+  this.name = name;   //商家名称
+  this.cname = cname;  //商品名字
+  this.cimage = cimage;  //商品图片
+  this.cprice = cprice;   //商品价格
 }
 
 module.exports = Commodity;
