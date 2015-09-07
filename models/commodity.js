@@ -59,29 +59,10 @@ Commodity.prototype.save = function(callback) {
 			});
 		});
 	});
-    //读取 commoditys 集合
-    /*
-db.collection('commoditys', function (err, collection) {
-      if (err) {
-        mongodb.close();
-        return callback(err);
-      }
-      //将文档插入 commoditys 集合
-      collection.insert(commodity, {
-        safe: true
-      }, function (err) {
-        mongodb.close();
-        if (err) {
-          return callback(err);//失败！返回 err
-        }
-        callback(null);//返回 err 为 null
-      });
-    });
-*/
   });
 };
 
-//读取文章及其相关信息
+//获取所有商品
 Commodity.getAll = function(name, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
@@ -98,7 +79,7 @@ Commodity.getAll = function(name, callback) {
       if (name) {
         query.name = name;
       }
-      //根据 query 对象查询文章
+      //根据 query 对象查询商品
       collection.find(query).sort({
         time: -1
       }).toArray(function (err, docs) {
@@ -117,7 +98,7 @@ docs.forEach(function (doc) {   //原来是post,应该是name,title,post中的po
 };
 
 
-//获取一篇文章
+//获取单个商品
 Commodity.getOne = function(name, day, cname, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
@@ -130,7 +111,7 @@ Commodity.getOne = function(name, day, cname, callback) {
         mongodb.close();
         return callback(err);
       }
-      //根据用户名、发表日期及文章名进行查询
+      //根据用户名、添加日期及商品名称进行查询
       collection.findOne({
         "name": name,
         "time.day": day,
@@ -142,7 +123,7 @@ Commodity.getOne = function(name, day, cname, callback) {
         }
         //解析 markdown 为 html
         doc.cimage = markdown.toHTML(doc.cimage);
-        callback(null, doc);//返回查询的一篇文章
+        callback(null, doc);//返回查询的商品
       });
     });
   });
@@ -172,7 +153,7 @@ Commodity.get = function (cid, callback) {
 
 
 
-//返回通过标题关键字查询的所有文章信息
+//返回关键字搜索商品
 Commodity.search = function(keyword, callback) {
   mongodb.open(function (err, db) {
     if (err) {
