@@ -244,7 +244,7 @@ app.post('/cart',checkLogin);
 app.post('/cart',function(req,res){
 		var cid=parseInt(req.body.cid);
 		var cname=req.body.cname;
-		var ciamge=req.body.cimage;
+		var cimage=req.body.cimage;
 		var cprice=req.body.cprice;
 		var name=req.body.name;
 		//var state=1;
@@ -257,21 +257,24 @@ app.post('/cart',function(req,res){
 			var cart=new Cart({
 				"cid":cid,
 				"cname":cname,
-				"cimage":ciamge,
+				"cimage":cimage,
 				"cprice":cprice,
 				"camount":camount,
-				//"state":state,
+				//"state":state, 
 				"uname":req.session.user,
-				"name":name
+				"name":name,
 			});
 			cart.save(function(err,carts){
 				if(err){
 					return res.redirect('/index');			
 				}
 				if(carts){
-					//res.json({success:2});
+					res.json({success:2});
 				}
-				//res.json({success:1});	
+                                //6.2geng gai de
+				else{
+                                res.json({success:1});
+                                 }	
 			});
 		});
 	});
@@ -280,7 +283,7 @@ app.post('/cart',function(req,res){
 
 app.post('/cart/modify',checkLogin);
 app.post('/cart/modify',function(req,res){
-		var cartid=req.body.cartid;
+		var cartid=parseInt(req.body.cartid);
 		var camount=parseInt(req.body.camount);
 		Cart.modify(req.session.user,cartid,camount,function(err,cart){
 
@@ -308,7 +311,7 @@ app.post('/cart/change',function(req,res){
 */
 app.post('/cart/del',checkLogin);
 app.post('/cart/del',function(req,res){
-	var cartid=req.body.cartid;
+	var cartid=parseInt(req.body.cartid);
 	Cart.del(req.session.user,cartid,function(err,cart){
 	if(cart){
 		return res.json({success:1});	
@@ -382,7 +385,15 @@ app.get('/order', function (req, res) {
  				if(err){
  					return res.redirect('/index');			
  				}
-				res.json({success:1});
+
+                                Cart.delall(req.session.user,function(err,user){
+                                        if(err){
+                                         return res.redirect('/');
+                                          }
+                                          else{
+                                          return res.json({success:1});
+                                          }
+                                });
  			});
  		});
  	});

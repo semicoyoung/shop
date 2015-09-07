@@ -152,7 +152,7 @@ app.get('/u/:name', function (req, res) {
       req.flash('error', '用户不存在!'); 
       return res.redirect('/');//用户不存在则跳转到主页
     }
-    //查询并返回该用户的所有文章
+    //查询并返回该用户的所有商品
     Commodity.getAll(user.name, function (err, commoditys) {
       if (err) {
         req.flash('error', err); 
