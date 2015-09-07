@@ -175,6 +175,7 @@ Cart.get = function (uname, state, callback) {
 
 /*
 Cart.addtocart = function (uname, cname, callback) {
+//asdf
     mongodb.open(function (err, db) {
         if (err) {
             callback(err);
