@@ -45,7 +45,7 @@ Address.prototype.save=function(callback){
 	});
 };
 
-//get address
+//获取地址
 
 Address.get=function(name,state,callback){
 	mongodb.open(function(err,db){
@@ -75,7 +75,7 @@ Address.get=function(name,state,callback){
 	});
 };
 
-//remove address
+//删除地址
 
 Address.del=function(name,aid,callback){
 	
@@ -84,15 +84,6 @@ Address.del=function(name,aid,callback){
 		
 		db.collection('adds',function(err,collection){
 			if(err){mongodb.close();callback(err);}
-			
-			/*collection.remove({"name":name,"aid":aid,"state":1});*/
-
-			/*collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}});
-			console.log("afd");
-			mongodb.close();
-			callback(err,1);
-		
-			*/
 			collection.update({"name":name,"aid":aid,"state":1},{$set:{"state":0}},function(err){mongodb.close();
 if(err){return callback(err);}
 callback(null,1);

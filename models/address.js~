@@ -1,17 +1,17 @@
 var mongodb=require('./db');
 
 function Address(address){
-	this.name=address.name;
-	this.ip=address.ip;
-	this.who=address.who;
-	this.phone=address.phone;
+	this.name=address.name;  //整个user的属性集合
+	this.ip=address.ip;      //收货人地址
+	this.who=address.who;     //收货人姓名
+	this.phone=address.phone;   //收货人电话
 }
 
 
 module.exports=Address;
 
-
-Address.prototype.save=function(callback){
+//保存一个地址
+Address.prototype.save=function(callback){   
 	var address={
 		name: this.name,
 		ip: this.ip,
