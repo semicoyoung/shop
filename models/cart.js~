@@ -235,25 +235,6 @@ Cart.del = function (uname, cartid, callback) {
                 callback(err);
             }
 
-                                                /*
-			collection.remove({"uname":uname,"_id":cartid},		{w:1},function(err){
-				mongodb.close();
-				if(err){
-					return callback(err);
-				}
-				callback(null);
-			});
-			*/
-/*
-			collection.update({"uname":uname,"_id":cartid},{$set:{"state":0}},function(err){
-				mongodb.close();
-				if(err){	
-					return callback(err,null); 
-				 }
-				callback(null,collection);
-});
-*/
-
             collection.findAndModify({"uname":uname,"cartid":cartid},[],{$set:{"state":0}},{new:true,upsert:true},function(err, cart) {
                 mongodb.close();
                 if (cart) {

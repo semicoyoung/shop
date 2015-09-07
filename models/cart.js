@@ -7,7 +7,7 @@ function Cart(cart) {
     this.cimage=cart.cimage;
     this.cprice = cart.cprice;  //商品价格
     this.camount = cart.camount;  //购物车中商品数量
-    this.name = cart.name;     //商家姓名(sold)
+    this.name = cart.name;     //商家姓名(sold,其实是一个用户数据对象)
 }
 
 module.exports = Cart;
@@ -175,7 +175,6 @@ Cart.get = function (uname, state, callback) {
 
 /*
 Cart.addtocart = function (uname, cname, callback) {
-//asdf
     mongodb.open(function (err, db) {
         if (err) {
             callback(err);
@@ -235,25 +234,6 @@ Cart.del = function (uname, cartid, callback) {
                 mongodb.close();
                 callback(err);
             }
-
-                                                /*
-			collection.remove({"uname":uname,"_id":cartid},		{w:1},function(err){
-				mongodb.close();
-				if(err){
-					return callback(err);
-				}
-				callback(null);
-			});
-			*/
-/*
-			collection.update({"uname":uname,"_id":cartid},{$set:{"state":0}},function(err){
-				mongodb.close();
-				if(err){	
-					return callback(err,null); 
-				 }
-				callback(null,collection);
-});
-*/
 
             collection.findAndModify({"uname":uname,"cartid":cartid},[],{$set:{"state":0}},{new:true,upsert:true},function(err, cart) {
                 mongodb.close();
