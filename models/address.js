@@ -76,7 +76,6 @@ Address.get=function(name,state,callback){
 };
 
 //删除地址
-
 Address.del=function(name,aid,callback){
 	
 	mongodb.open(function(err,db){
